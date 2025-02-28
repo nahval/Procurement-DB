@@ -54,8 +54,11 @@ BEGIN
     END IF;
 END //
 
-DELIMITER //
+DELIMITER ;
 -- Procedimiento centralizado para auditoría
+
+DROP PROCEDURE IF EXISTS manage_internal_pn;
+DELIMITER //
 CREATE PROCEDURE audit_operation(
     IN p_table_name VARCHAR(50),
     IN p_operation VARCHAR(10),
@@ -79,16 +82,15 @@ BEGIN
         p_new_data,
         CURRENT_USER()
     );
-END
+END //
 
 DELIMITER ;
 
 
 -- Llamadas de prueba:
-CALL manage_internal_pn('ADD' , 'TEST001', 'Componente de prueba', 'Active', 'Industrial');
-CALL manage_internal_pn('UPDATE', 'TEST001', 'Componente modificad', 'Obsolete', 'Automotive');
-CALL manage_internal_pn('DELETE', 'TEST001', NULL, NULL, NULL);
-CALL manage_internal_pn('ADD' , null , 'Componente de prueba', 'Active', 'Industrial');
+-- CALL manage_internal_pn('ADD' , 'TEST001', 'Componente de prueba', 'Active', 'Industrial');
+-- CALL manage_internal_pn('UPDATE', 'TEST001', 'Componente modificad', 'Obsolete', 'Automotive');
+-- CALL manage_internal_pn('DELETE', 'TEST001', NULL, NULL, NULL);
+-- CALL manage_internal_pn('ADD' , null , 'Componente de prueba', 'Active', 'Industrial');
 
-
-SELECT * FROM pn_intern WHERE intern_pn = 'TEST001';
+-- SELECT * FROM pn_intern WHERE intern_pn = 'TEST001';

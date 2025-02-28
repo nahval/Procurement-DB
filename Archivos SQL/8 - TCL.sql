@@ -3,7 +3,7 @@ SAVEPOINT before_stock_update;
 
 -- Intentamos actualizar la cantidad y la fecha de actualización del stock
 UPDATE stock 
-SET quantity = quantity - 60,  -- Ajusta la cantidad según lo necesario
+SET quantity = quantity - 40,  -- Ajusta la cantidad según lo necesario
     update_date = CURDATE()    -- Para MySQL (usar CURRENT_DATE en PostgreSQL)
 WHERE intern_pn_id = 2 AND warehouse = 'WH2';
 

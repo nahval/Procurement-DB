@@ -1,7 +1,8 @@
-DELIMITER $$
 
 CREATE DATABASE IF NOT EXISTS manage_components;
 USE manage_components;
+
+DELIMITER $$
 
 CREATE ROLE 'ingenieria_electronica';
 CREATE ROLE 'almacenamiento';
@@ -17,11 +18,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON manage_components.stock TO 'almacenamien
 GRANT SELECT, INSERT, UPDATE, DELETE ON manage_components.prices TO 'compras';
 
 GRANT SELECT ON manage_components.* TO 'lectura_general';
-
-REVOKE ALL PRIVILEGES ON manage_components.audit_log FROM 'ingenieria_electronica';
-REVOKE ALL PRIVILEGES ON manage_components.audit_log FROM 'almacenamiento';
-REVOKE ALL PRIVILEGES ON manage_components.audit_log FROM 'compras';
-REVOKE ALL PRIVILEGES ON manage_components.audit_log FROM 'lectura_general';
 
 CREATE USER 'usuario_ingenieria'@'localhost' IDENTIFIED BY 'contraseña_segura';
 GRANT 'ingenieria_electronica' TO 'usuario_ingenieria'@'localhost';
@@ -39,5 +35,5 @@ CREATE USER 'usuario_admin'@'localhost' IDENTIFIED BY 'contraseña_segura';
 GRANT 'administrador' TO 'usuario_admin'@'localhost';
 
 FLUSH PRIVILEGES;
-
+$$
 DELIMITER ;
