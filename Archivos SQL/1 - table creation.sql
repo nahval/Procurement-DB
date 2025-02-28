@@ -1,5 +1,4 @@
-
-CREATE DATABASE manage_components;
+CREATE DATABASE IF NOT EXISTS manage_components;
 USE manage_components;
 
 CREATE TABLE project (
@@ -21,7 +20,8 @@ CREATE TABLE pn_intern (
 );
 
 CREATE TABLE pn_manufacturer (
-    manuf_pn_id VARCHAR(100) PRIMARY KEY, -- Se mantiene como PK porque los PNs de fabricantes incluyen letras
+    manuf_pn_id INT auto_increment PRIMARY KEY,
+    manuf_pn VARCHAR (100) unique not null,
     pn_intern_id INT,
     descrip VARCHAR(500),
     manufacturer VARCHAR(100),
@@ -52,7 +52,7 @@ CREATE TABLE stock (
 
 CREATE TABLE api_data (
     api_data_id INT AUTO_INCREMENT PRIMARY KEY,
-    manuf_pn_id VARCHAR(100),
+    manuf_pn_id INT,
     source_api VARCHAR(100),
     price DECIMAL(15,2),
     currency VARCHAR(3),
@@ -94,4 +94,15 @@ CREATE TABLE relation_suppliers_internpn (
     used TINYINT(1),
     FOREIGN KEY (intern_pn_id) REFERENCES pn_intern(pn_intern_id) ON DELETE CASCADE,
     FOREIGN KEY (supplier_id) REFERENCES suppliers(supplier_number_id) ON DELETE CASCADE
+);
+
+CREATE TABLE AUDIT_LOG (
+    audit_id INT AUTO_INCREMENT PRIMARY KEY,
+    table_name VARCHAR(50) NOT NULL,
+    operation_type VARCHAR(10) NOT NULL,
+    record_id INT NOT NULL,
+    old_value JSON,
+    new_value JSON,
+    changed_by VARCHAR(50),
+    change_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
